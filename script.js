@@ -5,7 +5,7 @@ function calcArr(array) {
     let count = 0;
    
     for (let i = 0; i < array.length; i++) {
-        if (!isNaN(array[i])) {
+        if (Number(array[i])) {
             sum += array[i];
             count++;
         }
@@ -24,33 +24,60 @@ let numFirst = Number(prompt('Введіть перше число:'));
 let numSecond = Number(prompt('Введіть друге число:'));
 let operator = prompt('Введіть знак операції (+, -, *, /, %, ^(ступінь)):');
 
+
 function doMath(x, znak, y) {
-    switch (true) {
-        case (znak.trim() === '+'):
+    switch (znak) {
+        case '+':
             console.log( x + ' + ' + y + ' = ' + (x + y));
             break;
-        case (znak.trim() === '-'):
+        case '-':
             console.log( x + ' - ' + y + ' = ' + (x - y));
             break;
-        case (znak.trim() === '*'):
+        case '*':
             console.log( x + ' * ' + y + ' = ' + (x * y));
             break;
-        case (znak.trim() === '/'):
+        case '/':
             console.log( x + ' / ' + y + ' = ' + (x / y));
             break;
-        case (znak.trim() === '%'): 
+        case '%': 
             console.log('Залишок від поділу ' + x + ' на ' + y + ' дорівнює ' + (x % y))
             break;
-        case (znak.trim() === '^'):
+        case '^':
             console.log('Число ' + x + ' в ' + y + ' ступені дорівнює ' + (x ** y));
             break;    
         default:
-            console.log('Не правильно введені дані!')
+            console.log('Не правильно введені дані!');
             break;
     }
 }
 
-doMath(numFirst,operator,numSecond);
+function testOperator(str)
+{
+    let symb = '+-*/%^';
+    if (str != null ) {     
+        for (let i = 0; i < str.length; i++) {
+            for (let j = 0; j < symb.length; j++) {
+                if (str[i] === symb[j]) return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+if (Number(numFirst) && Number(numSecond)) {
+
+    if (testOperator(operator)) {
+        operator = operator.trim();
+        doMath(numFirst,operator,numSecond);
+    } else {
+        console.log('Не правильно введено знак операції!')
+    }
+
+} else {
+    console.log('Не правильно введені числа!')
+}
+
 
 
 ///////////////////////////////////////////////////////////
@@ -60,16 +87,24 @@ function arrAdd() {
     let arr = [];
     let amountArr = prompt('Введіть кількість массивів:');
 
-    for(let i = 0; i < amountArr; i++) {
-        arr.push([]);
-        let elementsArr = prompt('Введіть кількість елементів до масиву ' + (i + 1) + ' :');
-
-        for(let j = 0; j < elementsArr; j++) {
-            let currentElement = prompt('Введіть текст ' + (j + 1) + '-го елементу до масиву ' + (i + 1) + ' :');
-            arr[i].push([currentElement]);
+    if (amountArr > 0) {
+        for(let i = 0; i < amountArr; i++) {
+            arr.push([]);
+            let elementsArr = prompt('Введіть кількість елементів до масиву ' + (i + 1) + ' :');
+            
+            if (elementsArr > 0) {
+                for(let j = 0; j < elementsArr; j++) {
+                    let currentElement = prompt('Введіть текст ' + (j + 1) + '-го елементу до масиву ' + (i + 1) + ' :');
+                    arr[i].push([currentElement]);
+                }
+            } else {
+                return console.log('Невірно введена кількість елементів до массивів!');
+            }
         }
+    } else {
+        return console.log('Невірно введена кількість массивів');
     }
-    console.log(arr);
+    return console.log(arr);
 }
 
 let matrixArray = arrAdd();
